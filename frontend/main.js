@@ -1,4 +1,5 @@
 import './style.css';
+import './login.html';
 
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';

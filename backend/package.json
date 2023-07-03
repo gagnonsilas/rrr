@@ -4,7 +4,8 @@
   "description": "Romanian Rat Race",
   "main": "index.js",
   "scripts": {
-    "test": "npx tsc index.ts && node index.js && exit 1"
+    "build": "npx tsc && exit 1",
+    "run": "npx tsc && node build/index.js && exit 1"
   },
   "author": "",
   "license": "MIT",

@@ -1,10 +1,10 @@
 const express = require('express')
-var sqlite3 = require('sqlite3').verbose()
+const sqlite3 = require('sqlite3').verbose()
 
 const app = express()
 const port = 3000
 
-let db = new sqlite3.Database('./db/games.db', (err) => {
+let db = new sqlite3.Database('./db/games.db', (err: { messsage: any }) => {
   if(err) {
     return console.error(err.messsage)
   }
@@ -12,7 +12,7 @@ let db = new sqlite3.Database('./db/games.db', (err) => {
   console.log('Database opened')
 })
 
-db.close((err) => {
+db.close((err: { messsage: any }) => {
   if(err) {
     return console.error(err.messsage)
   }
@@ -20,8 +20,11 @@ db.close((err) => {
   console.log('Database closed')
 });
 
-app.get('/', (req, res) => {
-  res.send('<H1>RRR test</H1>')
+
+app.use('/', express.static('./../frontend/dist/'))
+
+app.post('/login', (req: any, res: any) => {
+  console.log(req)
 })
 
 app.listen(port, () => {
