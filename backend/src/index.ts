@@ -1,33 +1,26 @@
-const express = require('express')
-const sqlite3 = require('sqlite3').verbose()
+const express = require('express');
+const sqlite3 = require('sqlite3').verbose();
+import { WebSocketServer } from 'ws';
+import { createListeners } from './socket';
+import { Application } from 'express';
+import { loadSite } from './pages';
 
-const app = express()
-const port = 3000
+const app: Application = express();
+const port = 3000;
+const server = require('http').createServer(app);
+const wss = new WebSocketServer(server);
 
-let db = new sqlite3.Database('./db/games.db', (err: { messsage: any }) => {
-  if(err) {
-    return console.error(err.messsage)
+const games = new sqlite3.Database('../database/games.db', (error: { message: any }) => {
+  if(error) {
+    console.log(error.message);
   }
-
-  console.log('Database opened')
-})
-
-db.close((err: { messsage: any }) => {
-  if(err) {
-    return console.error(err.messsage)
-  }
-
-  console.log('Database closed')
 });
 
+createListeners(wss);
 
-app.use('/', express.static('./../frontend/dist/'))
-
-app.post('/login', (req: any, res: any) => {
-  console.log(req)
-})
+loadSite(app, games);
 
 app.listen(port, () => {
-  console.log(`RRR at http://localhost:${port}`)
-})
+  console.log(`RRR at http://localhost:${port}`);
+});
 
