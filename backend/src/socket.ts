@@ -5,6 +5,8 @@ export function createListeners(wss: WebSocketServer) {
     wss.on('message', readPacket)
 
     wss.on('connection', connection)
+
+    console.log("Loaded websocket")
 }
 
 function connection(webSocket: WebSocket) {
