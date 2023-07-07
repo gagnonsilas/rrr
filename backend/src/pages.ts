@@ -11,7 +11,7 @@ export function loadSite(app: Application, games: sqlite3) {
 }
 
 function loadStaticPages(app: Application) {
-    app.use('/', express.static('./../frontend/dist/'));
+    app.use('/', express.static('./../frontend/'));
 
     console.log("Loaded Static Pages");
 }

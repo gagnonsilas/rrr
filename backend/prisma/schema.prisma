@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String @id @default(uuid())
+  username  String  @unique
+  password  String
+  games     Game[]  @relation("users")
+  gameMasters Game[] @relation("gameMasters")
+  ratTeams     Team[]
+  ratMaster    Team[] @relation("ratMaster")
+  // Position
+  longitude Float
+  latitude Float
+  // Config
+
+}
+
+model Task {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  description String
+  location_attributes LocationAttribute[]
+  currentlyUsed Game[] @relation("currentTasks")
+  nextUsed Game[] @relation("nextTasks")
+  teamsCompleted Team[]
+  pointValue Int
+}
+
+model LocationAttribute {
+  name String @unique @id
+  Tasks Task[]
+  Location Location[]
+}
+
+model Location {
+  id Int @id @default(autoincrement())
+  longitude Float
+  latitude Float
+  location_attributes LocationAttribute[]
+}
+
+model Game {
+  id Int @id @default(autoincrement())
+  name String
+  teams Team[]
+  currentTasks Task[] @relation("currentTasks")
+  nextTasks Task[] @relation("nextTasks")
+  user User[] @relation("users")
+  gameMasters User[] @relation("gameMasters")
+  // Config
+  taskDurationMinutes Float @default(60)
+  boundryTop Float
+  boundryBottom Float
+  boundryLeft Float
+  boundryRight Float
+  teamSize Int @default(3)
+  // GameState
+  running Boolean @default(false)
+}
+
+model Team {
+  id Int @id @default(autoincrement())
+  name String
+  ratMaster User @relation("ratMaster", fields: [ratMasterId], references: [id])
+  ratMasterId String
+  rats User[]
+  game Game @relation(fields: [gameId], references: [id])
+  gameId Int
+  tasksCompleted Task[]
+}
