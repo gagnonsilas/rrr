@@ -1,7 +1,13 @@
 {
   "name": "rrr-frontend",
   "version": "1.0.0",
-  "dependencies": {
-    "leaflet": "^1.9.4"
+  "scripts": {
+    "build": "rm -rf ../out/pages/* && mkdir -p ../out/pages && npx tsc --outdir ../out/pages && cp assets/* -r ../out/pages"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.3",
+    "@types/leaflet-providers": "^1.2.1",
+    "tslib": "^2.6.0",
+    "typescript": "^5.1.6"
   }
 }
