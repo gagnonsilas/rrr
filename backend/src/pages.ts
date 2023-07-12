@@ -1,17 +1,16 @@
 import express = require('express')
 import { Application } from 'express'
-import { sqlite3 } from 'sqlite3';
 
-export function loadSite(app: Application, games: sqlite3) {
+export function loadSite(app: Application) {
     loadStaticPages(app);
 
-    loadDynamicPages(app, games)
+    loadDynamicPages(app)
 
     loadLogin(app);
 }
 
 function loadStaticPages(app: Application) {
-    app.use('/', express.static('./../frontend/'));
+    app.use('/', express.static('./../out/pages/'));
 
     console.log("Loaded Static Pages");
 }
@@ -26,7 +25,7 @@ function loadLogin(app: Application) {
     console.log("Loaded user login")
 }
 
-function loadDynamicPages(app: express.Application, games: sqlite3) {
+function loadDynamicPages(app: express.Application) {
 
     console.log("Loaded dynamic pages")
 }

@@ -1,18 +1,21 @@
 import { WebSocketServer } from 'ws';
-import { MessageEvent } from 'ws';
+
+let sockets: Array<WebSocket> = [];
 
 export function createListeners(wss: WebSocketServer) {
-    wss.on('message', readPacket)
 
-    wss.on('connection', connection)
+    wss.on('connection', connection);
 
-    console.log("Loaded websocket")
+    console.log("Loaded websocket");
 }
 
 function connection(webSocket: WebSocket) {
-    console.log(webSocket.url)
+    sockets.push(webSocket);
+    console.log(webSocket.url);
+
+    webSocket.addEventListener('message', readPacket);
 }
 
 function readPacket(message: MessageEvent) {
-    console.log(message.data)
+    console.log("Client Sent:", message.data)
 }

@@ -30,6 +30,5 @@ export default class Game {
     }
 
     update(wss: WebSocketServer) {
-        let test: 
     }
 }

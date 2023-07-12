@@ -4,8 +4,8 @@
   "description": "Romanian Rat Race",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc && npx prisma configure && (cd ../frontend && npm run build) && exit 1",
-    "run": "npm run build && node build/index.js && exit 1"
+    "build": "npx tsc && npx prisma generate && (cd ../frontend && npm run build && cd ../backend) && exit 1",
+    "run": "node build/index.js && exit 1"
   },
   "author": "",
   "license": "MIT",
